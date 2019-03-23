@@ -14,7 +14,7 @@ var port = 3000;
 mongoose.Promise = global.Promise;
 
 // Usamos el método connect para conectarnos a nuestra base de datos
-mongoose.connect('mongodb://localhost:27017/user', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost:27017/Shop', { useNewUrlParser: true })
     .then(() => {
         // Cuando se realiza la conexión, lanzamos este mensaje por consola
         console.log("La conexión a la base de datos user se ha realizado correctamente")
