@@ -10,7 +10,7 @@ var Schema = mongoose.Schema
 var BookSchema = Schema({
 	name: String,
 	price: { type: Number, default: 0 },
-	genre: { type: String, enum: ['Lírica', 'Narrativa', 'Drama', 'Novela', 'Temas Editoriales']},
+	genre: { type: String, enum: ['Lírica', 'Narrativa', 'Drama', 'Novela', 'Temas_Editoriales']},
 	description: String
 })
 
