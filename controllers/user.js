@@ -62,11 +62,11 @@ function saveUser(req, res, next) {
 	console.log('POST /api/user')
 	console.log(req.body)
 
-	const user = new User(
+	const user = new User()
 		user.email = req.body.email,
 		user.name = req.body.name,
 		user.password = req.body.password
-	)
+	
 
 User.findOne({ email: req.body.email }, (err, existingUser) => {
 	if (existingUser) {
