@@ -6,7 +6,7 @@ var express = require('express');
 // Cargamos el controlador
 var userCtrl = require('../controllers/user');
 var bookCtrl = require('../controllers/book');
-var passportConfig = require('../config/passport');
+var passportCtrl = require('../config/passport');
 
 // Llamamos al router
 var api = express.Router();
@@ -14,8 +14,8 @@ var api = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 api.get('/user', userCtrl.getUsers)
 api.get('/user/:userId', userCtrl.getUser)
-api.get('/user/logout', passportConfig.authenticated, userCtrl.logout)
-api.get('user/info', passportConfig.authenticated, userCtrl.userInfo)
+api.get('/user/logout', passportCtrl.authenticated, userCtrl.logout)
+api.get('user/info', passportCtrl.authenticated, userCtrl.userInfo)
 api.post('/user', userCtrl.saveUser)
 api.post('/user/login', userCtrl.userLogin)
 api.put('/user/:userId', userCtrl.updateUser)

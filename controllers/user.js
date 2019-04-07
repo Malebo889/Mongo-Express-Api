@@ -62,28 +62,28 @@ function saveUser(req, res, next) {
 	console.log('POST /api/user')
 	console.log(req.body)
 
-	const user = new User()
-		user.email = req.body.email,
-		user.name = req.body.name,
-		user.password = req.body.password
-	
+	const newUser = new User()
+		newUser.email = req.body.email,
+		newUser.name = req.body.name,
+		newUser.password = req.body.password
 
-User.findOne({ email: req.body.email }, (err, existingUser) => {
-	if (existingUser) {
-		return res.status(400).send('Este email ya esta registrado');
-	}
-	user.save((err) => {
-		if (err) {
-			next(err);
+
+	User.findOne({ email: req.body.email }, (err, existingUser) => {
+		if (existingUser) {
+			return res.status(400).send('Este email ya esta registrado');
 		}
-		req.logIn(user, (err) => {
+		newUser.save((err) => {
 			if (err) {
 				next(err);
 			}
-			res.send('Usuario guardado exitosamente.')
+			req.logIn(newUser, (err) => {
+				if (err) {
+					next(err);
+				}
+				res.send('Usuario guardado exitosamente.')
+			})
 		})
 	})
-})
 }
 
 function updateUser(req, res) {
@@ -110,7 +110,7 @@ function deleteUser(req, res) {
 	})
 }
 
-function logout (req, res) {
+function logout(req, res) {
 	req.logout();
 	res.send('Logout Correcto.');
 }
@@ -127,5 +127,5 @@ module.exports = {
 	saveUser,
 	updateUser,
 	deleteUser,
-	logout
+	logout,
 }
