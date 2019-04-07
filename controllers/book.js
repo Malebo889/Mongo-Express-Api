@@ -51,7 +51,7 @@ function getBookName(req, res) {
 }
 
 function getBookPrice(req, res) {
-	let bookPrice = req.params.name
+	let bookPrice = req.params.price
 
 	if (!bookPrice) return res.status(500).send({ message: 'Es necesario introducir un Precio.' })
 
