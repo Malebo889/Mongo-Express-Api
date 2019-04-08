@@ -20,23 +20,6 @@ function userLogin(req, res, next) {
 		})
 	})(req, res, next);
 }
-/*	const userLog = new User(req.body);
-
-	console.log(userLog)
-
-	User.findOne({ email: userLog.email }, (err, user) => {
-		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` });
-		if (!user) return res.status(404).send({ message: 'El usuario no existe' });
-		user.comparePassword(user.password, (err, equals) => {
-			console.log(user.password);
-			if (equals) {
-				res.status(200).send({ message: 'Acceso Concedido' })
-			} else {
-				return res.status(400).send({ message: 'Contraseña incorrecta' })
-			}
-		})
-	})
-}*/
 
 function getUser(req, res) {
 	let userId = req.params.userId
@@ -44,13 +27,13 @@ function getUser(req, res) {
 	User.findById(userId, (err, user) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
 		if (!user) return res.status(404).send({ message: 'El usuario no existe' })
-
+		if (isActive = true)
 		res.status(200).send({ user })
 	})
 }
 
 function getUsers(req, res) {
-	User.find({}, (err, users) => {
+	User.find({ isActive: true }, (err, users) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
 		if (!users) return res.status(404).send({ message: 'No existen usuarios' })
 
