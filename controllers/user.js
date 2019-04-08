@@ -28,12 +28,30 @@ function getUser(req, res) {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
 		if (!user) return res.status(404).send({ message: 'El usuario no existe' })
 		if (isActive = true)
-		res.status(200).send({ user })
+			res.status(200).send({ user })
 	})
 }
 
 function getUsers(req, res) {
+	User.find({}, (err, users) => {
+		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
+		if (!users) return res.status(404).send({ message: 'No existen usuarios' })
+
+		res.status(200).send({ users })
+	})
+}
+
+function getUsersTrue(req, res) {
 	User.find({ isActive: true }, (err, users) => {
+		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
+		if (!users) return res.status(404).send({ message: 'No existen usuarios' })
+
+		res.status(200).send({ users })
+	})
+}
+
+function getUsersFalse(req, res) {
+	User.find({ isActive: false }, (err, users) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
 		if (!users) return res.status(404).send({ message: 'No existen usuarios' })
 
@@ -46,7 +64,7 @@ function saveUser(req, res, next) {
 	console.log(req.body)
 
 	const newUser = new User()
-		newUser.email = req.body.email,
+	newUser.email = req.body.email,
 		newUser.name = req.body.name,
 		newUser.password = req.body.password
 
@@ -118,6 +136,8 @@ module.exports = {
 	userInfo,
 	getUser,
 	getUsers,
+	getUsersTrue,
+	getUsersFalse,
 	saveUser,
 	updateUser,
 	logicDeleteUser,

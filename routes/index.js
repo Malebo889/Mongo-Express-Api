@@ -13,12 +13,14 @@ var api = express.Router();
 
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 api.get('/user', userCtrl.getUsers)
-api.get('/user/:userId', userCtrl.getUser)
+api.get('/userid/:userId', userCtrl.getUser)
+api.get('/user/true', userCtrl.getUsersTrue)
+api.get('/user/false', userCtrl.getUsersFalse)
 api.get('/user/logout', passportCtrl.authenticated, userCtrl.logout)
 api.get('user/info', passportCtrl.authenticated, userCtrl.userInfo)
 api.post('/user', userCtrl.saveUser)
 api.post('/user/login', userCtrl.userLogin)
-api.put('/user/:userId', userCtrl.updateUser)
+api.put('/userid/:userId', userCtrl.updateUser)
 api.put('user', userCtrl.logicDeleteUser)
 api.delete('/user/:userId', userCtrl.deleteUser)
 
