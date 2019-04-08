@@ -19,6 +19,7 @@ api.get('user/info', passportCtrl.authenticated, userCtrl.userInfo)
 api.post('/user', userCtrl.saveUser)
 api.post('/user/login', userCtrl.userLogin)
 api.put('/user/:userId', userCtrl.updateUser)
+api.put('user', userCtrl.logicDeleteUser)
 api.delete('/user/:userId', userCtrl.deleteUser)
 
 api.get('/book', bookCtrl.getBooks)

@@ -11,7 +11,8 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     email: { type: String, unique: true, lowercase: true, require: true },
     name: { type: String, require: true },
-    password: { type: String, require: true }
+    password: { type: String, require: true },
+    isActive: {type:Boolean, default:true}
 }, {
     timestamps: true
 });

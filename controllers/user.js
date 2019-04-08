@@ -97,6 +97,17 @@ function updateUser(req, res) {
 	})
 }
 
+function logicDeleteUser(req, res) {
+	let userId = req.params.userId
+
+	User.findByIdAndUpdate(userId, logicDelete, (err, userUpdated) => {
+		if (err) res.status(500).send({ message: `Error al borrar el usuario: ${err}` })
+
+		res.status(200).send({ user: userUpdated })
+		logicDelete = false;
+	})
+}
+
 function deleteUser(req, res) {
 	let userId = req.params.userId
 
@@ -126,6 +137,7 @@ module.exports = {
 	getUsers,
 	saveUser,
 	updateUser,
+	logicDeleteUser,
 	deleteUser,
 	logout,
 }
