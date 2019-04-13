@@ -7,6 +7,7 @@ var express = require('express');
 var userCtrl = require('../controllers/user');
 var bookCtrl = require('../controllers/book');
 var passportCtrl = require('../config/passport');
+var auth = require('../middlewares/auth')
 
 // Llamamos al router
 var api = express.Router();
@@ -17,12 +18,15 @@ api.get('/userid/:userId', userCtrl.getUser)
 api.get('/user/true', userCtrl.getUsersTrue)
 api.get('/user/false', userCtrl.getUsersFalse)
 api.get('/user/logout', passportCtrl.authenticated, userCtrl.logout)
-api.get('user/info', passportCtrl.authenticated, userCtrl.userInfo)
-api.post('/user', userCtrl.saveUser)
-api.post('/user/login', userCtrl.userLogin)
+api.get('/user/info', passportCtrl.authenticated, userCtrl.userInfo)
+api.post('/user', userCtrl.signUp)
+api.post('/user/login', userCtrl.signIn)
 api.put('/userid/:userId', userCtrl.updateUser)
 api.put('user', userCtrl.logicDeleteUser)
 api.delete('/user/:userId', userCtrl.deleteUser)
+api.get('/user/private', auth, (req, res) => {
+    res.status(200).send({ message: 'Tienes Acceso' })
+})
 
 api.get('/book', bookCtrl.getBooks)
 api.get('/book/:bookId', bookCtrl.getBook)

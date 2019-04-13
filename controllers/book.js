@@ -29,7 +29,7 @@ function getBookGenre(req, res) {
 
 	if (!bookGenre) return res.status(500).send({ message: 'Es necesario introducir un Genero.' })
 
-	Book.find({'genre': bookGenre}, (err, books) => {
+	Book.find({ 'genre': bookGenre }, (err, books) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
 		if (!books) return res.status(404).send({ message: 'No existen libros' })
 
@@ -42,7 +42,7 @@ function getBookName(req, res) {
 
 	if (!bookName) return res.status(500).send({ message: 'Es necesario introducir un Nombre.' })
 
-	Book.find({'name': bookName}, (err, books) => {
+	Book.find({ 'name': bookName }, (err, books) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
 		if (!books) return res.status(404).send({ message: 'No existen libros' })
 
@@ -55,7 +55,7 @@ function getBookPrice(req, res) {
 
 	if (!bookPrice) return res.status(500).send({ message: 'Es necesario introducir un Precio.' })
 
-	Book.find({'price': bookPrice}, (err, books) => {
+	Book.find({ 'price': bookPrice }, (err, books) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición: ${err}` })
 		if (!books) return res.status(404).send({ message: 'No existen libros' })
 

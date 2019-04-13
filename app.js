@@ -31,6 +31,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // Metodo de control de acceso CORS
 app.use(cors())
 

@@ -2,9 +2,26 @@
 
 const User = require('../models/user')
 const passport = require('passport')
+const service = require('../service')
 
+// Funcion Login con Token
+function signIn(req, res) {
+	User.findOne({ email: req.body.email }, (err, user) => {
+		if (err)
+			return res.status(500).send({ message: err })
+		if (!user)
+			return res.status(404).send({ message: 'No existe el usuario,' })
 
-function userLogin(req, res, next) {
+		req.user = user
+		res.status(200).send({
+			message: 'Login Correcto',
+			token: service.createToken(user)
+		})
+	})
+}
+/*
+// Funcion Login con Passport
+function signIn(req, res, next) {
 	passport.authenticate('local', (err, user, info) => {
 		if (err) {
 			next(err);
@@ -20,7 +37,7 @@ function userLogin(req, res, next) {
 		})
 	})(req, res, next);
 }
-
+*/
 function getUser(req, res) {
 	let userId = req.params.userId
 
@@ -59,7 +76,33 @@ function getUsersFalse(req, res) {
 	})
 }
 
-function saveUser(req, res, next) {
+// Funcion Registrar con Token
+function signUp(req, res, next) {
+	console.log('POST /api/user')
+	console.log(req.body)
+
+	const user = new User()
+	user.email = req.body.email,
+		user.name = req.body.name,
+		user.password = req.body.password
+
+
+	User.findOne({ email: req.body.email }, (err, existingUser) => {
+		if (existingUser) {
+			return res.status(400).send('Este email ya esta registrado');
+		}
+		user.save((err) => {
+			if (err) {
+				res.status(500).send({ message: 'Error al crear el usuario' }),
+					next(err);
+			}
+			return res.status(200).send({ token: service.createToken(user) })
+		})
+	})
+}
+/*
+// Funcion Registrar con Passport
+function signUp(req, res, next) {
 	console.log('POST /api/user')
 	console.log(req.body)
 
@@ -86,6 +129,7 @@ function saveUser(req, res, next) {
 		})
 	})
 }
+*/
 
 function updateUser(req, res) {
 	let userId = req.params.userId
@@ -132,13 +176,13 @@ function userInfo(req, res) {
 }
 
 module.exports = {
-	userLogin,
+	signUp,
 	userInfo,
 	getUser,
 	getUsers,
 	getUsersTrue,
 	getUsersFalse,
-	saveUser,
+	signIn,
 	updateUser,
 	logicDeleteUser,
 	deleteUser,
